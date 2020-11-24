@@ -14,7 +14,7 @@ description:
   - Add or remove extensions within a Visual Studio Code
 version_added: "1.0.0"
 options:
-  extension:
+  name:
     required: true
     description:
       - Extension of Visual Studio Code you want to install.
@@ -22,7 +22,7 @@ options:
         list of extensions or a list of extensions.
     type: list
     elements: str
-    aliases: ['exts', 'ext', 'extensions']
+    aliases: ['exts', 'ext', 'extension', 'extensions']
   state:
     required: false
     choices: ['present', 'absent']
@@ -42,14 +42,14 @@ author:
 EXAMPLES = """
 # Add extensions in  Visual Studio Code
 - vscode_extension:
-  extensions:
+  name:
     - ext.test1@version1
     - ext.test2
   state: present
 
 # Remove extensions in Visual Studio Code
 - vscode_extension:
-  extensions:
+  name:
     - ext.test1@version1
     - ext.test2
   state: absent
@@ -142,10 +142,10 @@ class VSCodeCLI():
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            extension=dict(
+            name=dict(
                 type='list',
                 elements='str',
-                aliases=['exts', 'ext', 'extensions'],
+                aliases=['exts', 'ext', 'extension', 'extensions'],
                 required=True
             ),
             state=dict(
@@ -170,7 +170,7 @@ def main():
     cli = VSCodeCLI(module, code_bin)
 
     try:
-        wanted_extensions = module.params['extension'][:]
+        wanted_extensions = module.params['name'][:]
         cli.load_extensions()
 
         if module.params['state'] == 'present':

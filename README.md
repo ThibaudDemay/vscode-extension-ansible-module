@@ -31,8 +31,8 @@ You can use this module byt placing it in library folder in root of your ansible
 
 You can show what extensions was install on your Visual Studio Code with VS Code CLI.
 
-```bash
-$ code --list-extensions
+```console
+foo@bar:~$ code --list-extensions
 ms-python.python
 ms-toolsai.jupyter
 ```
