@@ -77,7 +77,7 @@ class VSCodeCLI():
             for extension in out.split():
                 ext = dict()
                 ext['raw'] = extension
-                ext['name'], ext['version'] = extension.split('@')
+                ext['name'], ext['version'] = extension.lower().split('@')
                 exts.append(ext)
 
         self.extensions = exts
@@ -170,7 +170,7 @@ def main():
     cli = VSCodeCLI(module, code_bin)
 
     try:
-        wanted_extensions = module.params['name'][:]
+        wanted_extensions = [ext.lower() for ext in module.params['name']]
         cli.load_extensions()
 
         if module.params['state'] == 'present':
